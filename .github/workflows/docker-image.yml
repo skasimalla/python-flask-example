@@ -15,4 +15,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: |
+        docker build . --file Dockerfile --tag py-sam-1:$(date +%s)
+        echo "${{ secrets.RTPASSWORD }}" | docker login https://samk1.jfrog.io/artifactory/docker-local/ --username admin --password-stdin
+        docker push samk1.jfrog.io/docker-local/py-sam-1:1
+        
+      
